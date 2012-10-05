@@ -7,6 +7,10 @@ function connectSocket() {
   socket = io.connect(ip, options)
 }
 
+function disconnectSocket() {
+  if (typeof socket !== "undefined") socket.disconnect()
+}
+
 function doMagicDroneStuff() {
   connectSocket()
   
@@ -18,6 +22,10 @@ function doMagicDroneStuff() {
   
   $('a.reconnect').click(function(e) {
     connectSocket()
+  })
+  
+  $('a.disconnect').click(function(e) {
+    disconnectSocket()
   })
   
 
