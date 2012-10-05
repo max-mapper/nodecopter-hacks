@@ -28,6 +28,10 @@ function doMagicDroneStuff() {
     disconnectSocket()
   })
   
+  $('a.spin').click(function(e) {
+    socket.emit('command', {dir: lastDir})
+  })
+  
 
   function deviceOrientationHandler(tiltLR, tiltFB, dir, motionUD) {
     if (!window.socket || !window.socket.socket.connected) return false
@@ -44,12 +48,15 @@ function doMagicDroneStuff() {
     document.getElementById("imgLogo").style.transform = "rotate(" + tiltLR + 
     "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
 
-    window.socket.emit('motion',{
-     'tiltLR': tiltLR,
-     'tiltFB': tiltFB,
-     'dir': dir,
-     'motionUD': motionUD,
-    });
+    // window.socket.emit('motion',{
+    //  'tiltLR': tiltLR,
+    //  'tiltFB': tiltFB,
+    //  'dir': dir,
+    //  'motionUD': motionUD,
+    // });
+    lastTiltLR = tiltLR
+    lastTileFB = tiltFB
+    lastDir = dir
   }                                                     
 
 

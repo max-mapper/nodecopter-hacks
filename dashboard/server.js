@@ -8,8 +8,17 @@ function dispatchDroneCommand(obj) {
   if (obj.takeoff) return client.takeoff()
   if (obj.land) return client.land()
   if (obj.stop) return client.stop()
-  if (obj.clockwise) return client.clockwise(obj.clockwise)
+  if (obj.reset) return client.disableEmergency()
   if (obj.backflip) return client.backflip()
+  if (obj.dir) {
+    console.log('spinning')
+    client.clockwise(0.5)
+    setTimeout(function() {
+      console.log('stopping')
+      client.clockwise(0)
+    }, obj.dir * 10)
+    return
+  }
   console.log('sending animate')
   return client.animateLeds('blinkRed', 5, 2)
 }
