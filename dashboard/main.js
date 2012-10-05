@@ -14,21 +14,21 @@ function disconnectSocket() {
 function doMagicDroneStuff() {
   connectSocket()
   
-  $('a.command').click(function(e) {
+  $('a.command').tap(function(e) {
     var command = {}
     command[$(e.target).attr('data-command')] = true
     socket.emit('command', command)
   })
   
-  $('a.reconnect').click(function(e) {
+  $('a.reconnect').tap(function(e) {
     connectSocket()
   })
   
-  $('a.disconnect').click(function(e) {
+  $('a.disconnect').tap(function(e) {
     disconnectSocket()
   })
   
-  $('a.spin').click(function(e) {
+  $('a.spin').tap(function(e) {
     socket.emit('command', {dir: lastDir})
   })
   
@@ -40,13 +40,13 @@ function doMagicDroneStuff() {
     document.getElementById("doTiltFB"   ).innerHTML = Math.round(tiltFB);
     document.getElementById("doDirection").innerHTML = Math.round(dir);
     document.getElementById("doMotionUD" ).innerHTML = motionUD;
-
-    // Apply the transform to the image
-    document.getElementById("imgLogo").style.webkitTransform = "rotate(" + 
-     tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
-    document.getElementById("imgLogo").style.MozTransform = "rotate(" + tiltLR + "deg)";
-    document.getElementById("imgLogo").style.transform = "rotate(" + tiltLR + 
-    "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
+    // 
+    // // Apply the transform to the image
+    // document.getElementById("imgLogo").style.webkitTransform = "rotate(" + 
+    //  tiltLR + "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
+    // document.getElementById("imgLogo").style.MozTransform = "rotate(" + tiltLR + "deg)";
+    // document.getElementById("imgLogo").style.transform = "rotate(" + tiltLR + 
+    // "deg) rotate3d(1,0,0, " + (tiltFB * -1) + "deg)";
 
     // window.socket.emit('motion',{
     //  'tiltLR': tiltLR,

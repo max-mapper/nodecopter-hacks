@@ -5,11 +5,27 @@ var client  = arDrone.createClient()
 var JSONStream = require('JSONStream')
 
 function dispatchDroneCommand(obj) {
-  if (obj.takeoff) return client.takeoff()
+  if (obj.takeoff) {
+    client.takeoff()
+    client.takeoff()
+    client.takeoff()
+    return
+  }
   if (obj.land) return client.land()
+  if (obj.start) return client.front(0.2)
   if (obj.stop) return client.stop()
+  if (obj.up) return client.up(obj.up)
+  if (obj.down) {
+    client.down(0.5)
+    client.down(0.5)
+    setTimeout(function() {
+      client.down(0)
+      client.down(0)
+    }, 1000)
+    return
+  }
   if (obj.reset) return client.disableEmergency()
-  if (obj.backflip) return client.backflip()
+  if (obj.flip) return client.animate('flipLeft', 15)
   if (obj.dir) {
     console.log('spinning')
     client.clockwise(0.5)
@@ -19,8 +35,8 @@ function dispatchDroneCommand(obj) {
     }, obj.dir * 10)
     return
   }
-  console.log('sending animate')
-  return client.animateLeds('blinkRed', 5, 2)
+  console.log('no match', Object.keys(obj))
+  return client.stop()
 }
 
 function createDroneStream() {
