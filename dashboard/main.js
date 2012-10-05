@@ -1,6 +1,5 @@
 function connectSocket() {
-  // var ip = "192.168.1.2"
-  var ip = "10.201.0.71"
+  var ip = "ve.5bpbxlsy.vesrv.com:5000"
   if (typeof socket !== "undefined") socket.disconnect()
   var options = {secure: false, reconnect: false, 'force new connection': true}
   var socket = io.connect(ip, options)
