@@ -14,9 +14,10 @@ function dispatchDroneCommand(obj) {
   return client.animateLeds('blinkRed', 5, 2)
 }
 
-var stream = net.connect(5555).pipe(JSONStream.parse([true]))
+var stream = net.connect(5555, 've.5bpbxlsy.vesrv.com').pipe(JSONStream.parse([true]))
 var ev = emitStream(stream)
 
 ev.on('command', function (t) {
-    console.log('# command: ' + t)
+    console.log('# command: ', t)
+    dispatchDroneCommand(t)
 })
