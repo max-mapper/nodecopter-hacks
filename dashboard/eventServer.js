@@ -51,10 +51,10 @@ function initWebServer(cb) {
 initWebServer(function() {
   io.sockets.on('connection', function(socket) {
     socket.on('command', function(obj) {
-      console.log('socket command', obj)
+      remoteEv.emit('command', commands)
     })
     socket.on('motion', function(obj) {
-      console.log('socket motion', obj)
+      remoteEv.emit('command', commands)
     })
   })
 })

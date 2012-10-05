@@ -14,10 +14,21 @@ function dispatchDroneCommand(obj) {
   return client.animateLeds('blinkRed', 5, 2)
 }
 
-var stream = net.connect(5555, 've.5bpbxlsy.vesrv.com').pipe(JSONStream.parse([true]))
-var ev = emitStream(stream)
-
-ev.on('command', function (t) {
+function createDroneStream() {
+  var connection = net.connect(5555, 've.5bpbxlsy.vesrv.com', function() {
+    console.log('connected!')
+  })
+  var jsonParseStream = JSONStream.parse([true])
+  connection.pipe(jsonParseStream)
+  var ev = emitStream(jsonParseStream)
+  ev.on('command', function (t) {
     console.log('# command: ', t)
     dispatchDroneCommand(t)
-})
+  })
+  connection.on('end', function() {
+    console.log('disconnected!')
+    createDroneStream()
+  })
+}
+
+createDroneStream()

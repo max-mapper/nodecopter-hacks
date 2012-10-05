@@ -1,11 +1,13 @@
+var socket
+
 function connectSocket() {
   var ip = "ve.5bpbxlsy.vesrv.com:5000"
   if (typeof socket !== "undefined") socket.disconnect()
   var options = {secure: false, reconnect: false, 'force new connection': true}
-  var socket = io.connect(ip, options)
+  socket = io.connect(ip, options)
 }
 
-$(function() {
+function doMagicDroneStuff() {
   connectSocket()
   
   $('a.command').click(function(e) {
@@ -91,4 +93,8 @@ $(function() {
     } else {
       document.getElementById("doEvent").innerHTML = "Not supported on your device or browser."
     }
+}
+
+$(function() {
+  doMagicDroneStuff()
 })
