@@ -1,32 +1,22 @@
-var http = require('http')
-var socketio = require('socket.io')
-var fs = require('fs')
-var ecstatic = require('ecstatic')(__dirname)
+var emitStream = require('emit-stream')
+var net = require('net')
 var arDrone = require('ar-drone')
 var client  = arDrone.createClient()
-var io
+var JSONStream = require('JSONStream')
 
-function initWebServer(cb) {
-  if (!cb) cb = function(){}
-  var server = http.createServer(function(req, res) {
-    if (req.url.match(/socket\.io/)) return
-    ecstatic(req, res)
-  })
-  io = socketio.listen(server)
-  io.set('log level', 1)
-  console.log('Listening on :8000')
-  server.listen(8000, cb)
+function dispatchDroneCommand(obj) {
+  if (obj.takeoff) return client.takeoff()
+  if (obj.land) return client.land()
+  if (obj.stop) return client.stop()
+  if (obj.clockwise) return client.clockwise(obj.clockwise)
+  if (obj.backflip) return client.backflip()
+  console.log('sending animate')
+  return client.animateLeds('blinkRed', 5, 2)
 }
 
+var stream = net.connect(5555).pipe(JSONStream.parse([true]))
+var ev = emitStream(stream)
 
-
-initWebServer(function() {
-  io.sockets.on('connection', function(socket) {
-    socket.on('command', function(obj) {
-      if (obj === "takeoff") return client.takeoff()
-      if (obj === "land") return client.land()
-      if (obj === "stop") return client.stop()
-      if (obj.clockwise) return client.clockwise(obj.clockwise)
-    })
-  })
+ev.on('command', function (t) {
+    console.log('# command: ' + t)
 })

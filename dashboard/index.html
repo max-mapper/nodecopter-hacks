@@ -14,11 +14,47 @@
 
 </head>
 <body>
-  <p><a data-command="takeoff">TAKEOFF</a></p>
-  <p><a data-command="land">LAND</a></p>
-  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <p><a class="command" data-command="takeoff">TAKEOFF</a></p>
+  <p><a class="command" data-command="land">LAND</a></p>
+  <p><a class="reconnect">RECONNECT</a></p>
+  
+  <div class="main">
+    <h2>Device Orientation</h2>
+    <table>
+      <tr>
+        <td>Event Supported</td>
+        <td id="doEvent"></td>
+      </tr>
+      <tr>
+        <td>Tilt Left/Right [tiltLR]</td>
+        <td id="doTiltLR"></td>
+      </tr>
+      <tr>
+        <td>Tilt Front/Back [tiltFB]</td>
+        <td id="doTiltFB"></td>
+      </tr>
+      <tr>
+        <td>Direction [direction]</td>
+        <td id="doDirection"></td>
+      </tr>
+      <tr>
+        <td>Motion Up/Down</td>
+        <td id="doMotionUD"></td>
+      </tr>
+     </table>
+  </div>
+
+  <div class="container" style="-webkit-perspective: 300; perspective: 300;">
+    <img src="pizza.jpeg" id="imgLogo" class="logo">
+  </div>
+  
+  <script type="text/javascript" src="http://10.201.0.71/socket.io/socket.io.js"></script>
+  <!-- // <script type="text/javascript" src="http://192.168.1.2/socket.io/socket.io.js"></script> -->
+  <script type="text/javascript" src="cordova-2.1.0.js"></script>
   <script type="text/javascript" src="zepto.js"></script>
   <script type="text/javascript" src="main.js"></script>
 </body>
 
 </html>
+
+
